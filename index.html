@@ -1,1 +1,118 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartSender</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 22px;
+  background: #0d1422;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+header { margin: 12px 0 28px; }
+.logo { color: #55aaff; font-size: 25px; font-weight: bold; }
+.sub { color: #91a0b8; margin-top: 7px; font-size: 13px; }
+h2 { font-size: 19px; margin: 25px 0 14px; }
+.card {
+  background: #182438;
+  border: 1px solid #263751;
+  border-radius: 15px;
+  padding: 17px;
+  margin-bottom: 12px;
+}
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.number { font-size: 25px; font-weight: bold; margin-top: 8px; }
+.muted { color: #91a0b8; font-size: 13px; }
+button {
+  border: 0;
+  border-radius: 11px;
+  padding: 14px;
+  width: 100%;
+  background: #2388ed;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.secondary { background: #263751; }
+textarea, input {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid #344761;
+  background: #101c2d;
+  color: white;
+  margin-top: 10px;
+  font-size: 14px;
+}
+textarea { min-height: 100px; resize: vertical; }
+.menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.menu .card { margin: 0; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">✦ SmartSender</div>
+  <div class="sub">Платформа Telegram-рассылок для бизнеса</div>
+</header>
+
+<div class="stats">
+  <div class="card">
+    <div class="muted">Подписчики</div>
+    <div class="number" id="subscribers">0</div>
+  </div>
+  <div class="card">
+    <div class="muted">Рассылки</div>
+    <div class="number" id="campaigns">0</div>
+  </div>
+</div>
+
+<h2>Управление</h2>
+<div class="menu">
+  <div class="card">📨<br><br>Рассылки</div>
+  <div class="card">👥<br><br>Аудитория</div>
+  <div class="card">📊<br><br>Статистика</div>
+  <div class="card">⚙️<br><br>Настройки</div>
+</div>
+
+<h2>Новая рассылка</h2>
+<div class="card">
+  <div class="muted">Текст сообщения</div>
+  <textarea id="message" placeholder="Напишите сообщение подписчикам..."></textarea>
+  <div class="muted">Дата и время отправки (позже подключим планировщик)</div>
+  <input type="datetime-local" id="schedule">
+  <button onclick="createCampaign()">Создать рассылку</button>
+  <button class="secondary" onclick="previewMessage()">Предпросмотр</button>
+  <div id="status" class="muted" style="margin-top:14px"></div>
+</div>
+
+<script>
+let campaigns = 0;
+
+function createCampaign() {
+  const message = document.getElementById('message').value.trim();
+  if (!message) {
+    document.getElementById('status').textContent = 'Сначала напишите сообщение.';
+    return;
+  }
+  campaigns++;
+  document.getElementById('campaigns').textContent = campaigns;
+  document.getElementById('status').textContent =
+    'Черновик создан! Отправку подключим на следующем этапе.';
+  document.getElementById('message').value = '';
+}
+
+function previewMessage() {
+  const message = document.getElementById('message').value.trim();
+  document.getElementById('status').textContent =
+    message ? 'Предпросмотр: ' + message : 'Сначала напишите сообщение.';
+}
+</script>
+</body>
+</html>
+
